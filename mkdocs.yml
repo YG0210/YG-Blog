@@ -1,0 +1,96 @@
+site_name: YG笔记本
+site_description: 一个记录思考、技术与生活的地方
+site_author: YG
+
+# 使用Material主题
+theme:
+  name: material
+  # Material主题配置
+  features:
+    - content.code.annotate
+    - navigation.tabs
+    - navigation.top
+    - navigation.footer
+  palette: # 界面整体样式
+    - media: "(prefers-color-scheme)" # 系统主题
+      toggle:
+        icon: material/theme-light-dark
+        name: 系统主题
+    - media: "(prefers-color-scheme: light)" # 亮色主题
+      scheme: default
+      primary: white
+      accent: green
+      toggle:
+        icon: material/weather-sunny
+        name: 明亮主题
+    - media: "(prefers-color-scheme: dark)" # 暗色主题
+      scheme: slate
+      primary: black
+      accent: yellow
+      toggle:
+        icon: material/weather-night
+        name: 暗黑主题
+  font: false # 避免从谷歌加载字体导致网页加载变慢
+  logo: logo.svg # 页面左上角徽标
+  favicon: logo.svg # 网页的图标
+  icon: # 图标重载，替换掉默认的图标
+    repo: fontawesome/brands/github # 右上角仓库图标
+    edit: material/file-edit # 页面编辑的图标
+    view: material/file-eye # 页面查看源代码的图标
+    tag:
+      default: material/tag
+  # 页脚配置
+  footer:
+    links:
+      - icon: github
+        name: GitHub
+        link: https://github.com
+
+# 额外设定
+extra:
+  generator: false # 页面底部不显示生成信息
+  status: # 元信息状态标识
+    new: 最近添加
+    deprecated: 已废弃
+  homepage: . # 左上角徽标链接的地址
+  tags:
+
+# 导航配置
+nav:
+  - 首页: index.md
+  - 分类:
+    - Python:
+        - 概述: python/index.md
+        - Python基础: python/basic.md
+        - Python进阶: python/advanced.md
+    - AI应用开发:
+        - 概述: ai/index.md
+        - 机器学习: ai/ml.md
+        - 深度学习: ai/dl.md
+        - 大语言模型: ai/llm.md
+    - 算法:
+        - 概述: algorithm/index.md
+        - 排序算法: algorithm/sort.md
+        - 查找算法: algorithm/search.md
+        - 图算法: algorithm/graph.md
+    - 数据结构:
+        - 概述: datastructure/index.md
+        - 线性结构: datastructure/linear.md
+        - 非线性结构: datastructure/nonlinear.md
+
+# 插件配置
+plugins:
+  - search
+  - minify:
+      minify_html: true
+
+# Markdown扩展配置
+markdown_extensions:
+  - admonition
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.emoji:
+      emoji_index: !!python/name:materialx.emoji.twemoji
+      emoji_generator: !!python/name:materialx.emoji.to_svg
+  - toc:
+      permalink: true
