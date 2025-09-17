@@ -48,6 +48,15 @@ pnpm-lock.yaml
 .alpackages/
 #Snapshots folder
 .snapshots/
+
+# mkdocs build output
+site/
+
+# mkdocs configuration file
+mkdocs.yml
+
+# requirements file
+requirements.txt
 #Testing Output folder
 .output/
 #Extension App-file

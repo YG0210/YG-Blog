@@ -13,6 +13,9 @@
 ## 开发指南
 
 ## 部署说明
+mkdocs build
+mkdocs serve
+mkdocs gh-deploy
 
 ## 许可证
 >>>>>>> fe5031d04d014c66015a77ad8074d18e47b08537
