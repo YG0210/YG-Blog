@@ -54,6 +54,9 @@ extra:
     deprecated: 已废弃
   homepage: . # 左上角徽标链接的地址
   tags:
+  # 添加Font Awesome图标库支持
+  css:
+    - https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css
 
 # 导航配置
 nav:
@@ -84,6 +87,10 @@ plugins:
   - search
   - minify:
       minify_html: true
+
+# Hooks配置
+hooks:
+  - hooks/inject_music_player.py
 
 # Markdown扩展配置
 markdown_extensions:
