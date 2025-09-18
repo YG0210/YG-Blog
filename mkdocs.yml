@@ -58,6 +58,7 @@ extra:
 # 导航配置
 nav:
   - 首页: index.md
+  - 在线编程: jupyter.md
   - 分类:
     - Python:
         - 概述: python/index.md
