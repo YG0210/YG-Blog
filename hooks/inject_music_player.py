@@ -37,11 +37,11 @@ def on_page_content(html, page, config, files):
         </script>
         '''
         
-        # 使用绝对路径注入脚本，确保在所有页面上都能正确加载
-        # 因为MkDocs在本地开发时将docs目录作为根目录
-        script_path = '/assets/music_player.js'
+        # 使用相对路径注入脚本，避免在GitHub Pages子目录部署时出现404错误
+        # 相对路径会根据当前页面位置自动调整
+        script_path = 'assets/music_player.js'
         
-        print(f"使用绝对路径: {script_path}")
+        print(f"使用相对路径: {script_path}")
         
         # 在页面底部注入音乐播放器脚本
         script_injection = f'''

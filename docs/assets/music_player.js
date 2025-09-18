@@ -20,15 +20,30 @@ function initMusicPlayer() {
             // 获取当前脚本的位置，用于计算相对路径
             let basePath = '';
             
-            // 尝试不同的路径处理方式，确保在Windows环境中能正确加载中文文件名
+            // 尝试不同的路径处理方式，确保在各种环境中能正确加载中文文件名
             try {
-                // 使用相对于当前页面的路径
-                if (window.location.hostname === '127.0.0.1' || window.location.hostname === 'localhost') {
+                // 获取当前页面的主机名，用于判断环境
+                const hostname = window.location.hostname;
+                
+                if (hostname === '127.0.0.1' || hostname === 'localhost') {
                     // 本地开发环境 - 使用根路径
                     basePath = '/music/';
-                } else if (currentPath.includes('/YG-Blog/')) {
-                    // GitHub Pages部署
-                    basePath = '/YG-Blog/music/';
+                    console.log('本地开发环境，使用根路径:', basePath);
+                } else if (hostname.includes('github.io')) {
+                    // GitHub Pages部署环境
+                    // 提取仓库名作为基础路径
+                    // GitHub Pages的URL格式通常是：username.github.io/repository-name/
+                    const pathParts = currentPath.split('/').filter(Boolean);
+                    
+                    if (pathParts.length > 0 && !pathParts[0].includes('.')) {
+                        // 假设第一个路径段是仓库名
+                        const repoName = pathParts[0];
+                        basePath = `/${repoName}/music/`;
+                    } else {
+                        // 无法确定仓库名，使用当前检测到的固定路径
+                        basePath = '/YG-Blog/music/';
+                    }
+                    console.log('GitHub Pages环境，使用仓库路径:', basePath);
                 } else {
                     // 其他情况 - 使用相对路径
                     // 从URL中移除文件名部分，只保留目录部分
@@ -38,6 +53,7 @@ function initMusicPlayer() {
                     } else {
                         basePath = './music/';
                     }
+                    console.log('其他环境，使用相对路径:', basePath);
                 }
             } catch (e) {
                 console.error('路径计算错误:', e);
@@ -45,8 +61,6 @@ function initMusicPlayer() {
             }
             
             console.log('计算得到的音乐文件基础路径:', basePath);
-            
-            console.log('音乐文件基础路径:', basePath);
             
             // 优先使用从服务端注入的音乐文件列表
             // 如果不存在，则回退到预定义的列表
@@ -93,26 +107,28 @@ function initMusicPlayer() {
                 // 确保路径格式正确，特别是在Windows环境下处理中文文件名
                 let src = '';
                 
-                // 尝试使用不同的路径组合方式
+                // 构建完整路径，确保在不同环境下都能正确访问
+                // 如果是绝对路径，直接使用
                 if (basePath.startsWith('/')) {
-                    // 绝对路径
                     src = basePath + filename;
                 } else {
-                    // 相对路径
+                    // 相对路径，确保正确拼接
                     src = basePath + filename;
                 }
                 
                 // 在浏览器环境中统一使用斜杠
                 src = src.replace(/\\/g, '/');
                 
-                // 对中文文件名进行编码处理
+                // 对中文文件名进行编码处理，确保在所有环境中都能正确加载
                 try {
                     const pathParts = src.split('/');
                     const encodedFilename = encodeURIComponent(pathParts[pathParts.length - 1]);
                     pathParts[pathParts.length - 1] = encodedFilename;
                     src = pathParts.join('/');
+                    console.log('编码后的完整路径:', src);
                 } catch (e) {
                     console.error('文件名编码错误:', e);
+                    // 即使编码失败，仍然尝试使用原始路径
                 }
                 
                 console.log(`加载音乐文件: ${cleanName}, 编码后路径: ${src}`);
